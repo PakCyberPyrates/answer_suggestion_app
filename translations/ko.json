@@ -1,11 +1,11 @@
 {
   "app": {
-    "description": "기술 자료의 답변 제안",
+    "description": "지식창고의 답변 제안",
     "name": "답변 제안",
     "parameters": {
       "nb_entries": {
         "label": "결과 수",
-        "helpText": "표시할 결과 수(기본: 10개, 최소: 1개, 최대: 100개)."
+        "helpText": "표시할 결과 수(기본: 10개, 최소: 1개, 최대: 100개)"
       },
       "custom_host": {
         "label": "사용자 지정 도메인",
