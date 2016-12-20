@@ -87,13 +87,6 @@
           url: url,
           data: data
         };
-      },
-
-      fetchTopicsWithForums: function(ids){
-        return {
-          url: helpers.fmt('/api/v2/topics/show_many.json?ids=%@&include=forums', ids.join(',')),
-          type: 'POST'
-        };
       }
     },
 
@@ -222,39 +215,40 @@
     },
 
     searchHelpCenterDone: function(data) {
-      this.renderList(this.formatHcEntries(data.results));
+      console.log("data:", data);
+      this.renderList(this.formatHcArticles(data.results));
     },
 
     renderList: function(data){
-      if (_.isEmpty(data.entries)) {
-        this.switchTo('no_entries');
+      if (_.isEmpty(data.articles)) {
+        this.switchTo('no_articles');
       } else {
         this.switchTo('list', data);
         this.$('.brand-logo').tooltip();
       }
     },
 
-    formatHcEntries: function(result){
-      var slicedResult = result.slice(0, this.numberOfDisplayableEntries());
-      var entries = _.inject(slicedResult, function(memo, entry) {
-        var title = entry.name,
-            zendeskUrl = entry.html_url.match(this.zendeskRegex),
+    formatHcArticles: function(result){
+      var slicedResult = result.slice(0, this.numberOfDisplayableArticles());
+      var articles = _.inject(slicedResult, function(memo, article) {
+        var title = article.name,
+            zendeskUrl = article.html_url.match(this.zendeskRegex),
             subdomain = zendeskUrl && zendeskUrl[1];
 
         memo.push({
-          id: entry.id,
-          url: entry.html_url,
-          title: entry.name,
+          id: article.id,
+          url: article.html_url,
+          title: article.name,
           subdomain: subdomain,
-          body: entry.body,
-          brandName: entry.brand_name,
-          brandLogo: this.brandsInfo && this.brandsInfo[entry.brand_name] || this.DEFAULT_LOGO_URL,
+          body: article.body,
+          brandName: article.brand_name,
+          brandLogo: this.brandsInfo && this.brandsInfo[article.brand_name] || this.DEFAULT_LOGO_URL,
           isMultibrand: this.isMultibrand
         });
         return memo;
       }, [], this);
 
-      return { entries: entries };
+      return { articles: articles };
     },
 
     processSearchFromInput: function() {
@@ -277,7 +271,7 @@
       $link.parent().parent().parent().removeClass('open');
       var $modal = this.$("#detailsModal");
       $modal.html(this.renderTemplate('modal', {
-        title: $link.closest('.entry').data('title'),
+        title: $link.closest('.article').data('title'),
         link: $link.attr('href')
       }));
       $modal.modal();
@@ -306,14 +300,6 @@
       return this.appendToComment(content);
     },
 
-    renderTopicContent: function(id) {
-      var topic = _.find(this.store('entries').entries, function(entry) {
-        return entry.id == id;
-      });
-      this.updateModalContent(topic.body);
-      if (this.isAgentOnlyContent(topic)) { this.renderAgentOnlyAlert(); }
-    },
-
     getContentFor: function($link) {
       var subdomain = $link.data('subdomain');
       if (!subdomain || subdomain !== this.currentAccount().subdomain()) {
@@ -331,16 +317,16 @@
       return _.map(this.I18n.t("stop_words").split(','), function(word) { return word.trim(); });
     }),
 
-    numberOfDisplayableEntries: function(){
+    numberOfDisplayableArticles: function(){
       return this.setting('nb_entries') || this.defaultNumberOfEntriesToDisplay;
     },
 
     queryLimit: function(){
       // ugly hack to return more results than needed because we filter out agent only content
       if (this.setting('exclude_agent_only')) {
-        return this.numberOfDisplayableEntries() * 2;
+        return this.numberOfDisplayableArticles() * 2;
       } else {
-        return this.numberOfDisplayableEntries();
+        return this.numberOfDisplayableArticles();
       }
     },
 
