@@ -215,7 +215,6 @@
     },
 
     searchHelpCenterDone: function(data) {
-      console.log("data:", data);
       this.renderList(this.formatHcArticles(data.results));
     },
 
