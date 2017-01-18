@@ -321,12 +321,7 @@
     },
 
     queryLimit: function(){
-      // ugly hack to return more results than needed because we filter out agent only content
-      if (this.setting('exclude_agent_only')) {
-        return this.numberOfDisplayableArticles() * 2;
-      } else {
-        return this.numberOfDisplayableArticles();
-      }
+      return this.numberOfDisplayableArticles();
     },
 
     removeStopWords: function(str, stop_words){

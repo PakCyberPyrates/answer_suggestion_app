@@ -19,10 +19,6 @@
       "name": "include_title",
       "type": "checkbox",
       "default": "1"
-    },
-    {
-      "name": "exclude_agent_only",
-      "type": "checkbox"
     }
   ],
   "defaultLocale": "en",
