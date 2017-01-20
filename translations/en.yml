@@ -41,14 +41,17 @@ parts:
       key: "txt.apps.answer_suggestion_app.app.parameters.search_hc.label"
       title: "Check box for customers who are using help center as opposed to web portal"
       value: "Are you using Help Center?"
+      obsolete: "2017-02-01"
   - translation:
       key: "txt.apps.answer_suggestion_app.app.parameters.search_hc.helpText"
       title: "Help text for the check box for help center usage"
       value: "Select this option to search Help Center articles."
+      obsolete: "2017-02-01"
   - translation:
       key: "txt.apps.answer_suggestion_app.app.parameters.exclude_agent_only.label"
       title: "Check box to exclude topics only visible to agents"
       value: "Exclude 'Agents only' topics. (Web Portal only)"
+      obsolete: "2017-02-01"
   - translation:
       key: "txt.apps.answer_suggestion_app.layout.placeholder_text"
       title: "Placeholder text in the search bar"
