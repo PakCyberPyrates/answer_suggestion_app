@@ -39,7 +39,7 @@
   "help_text": "按一下連結新增至評論：",
   "spinner": "載入中",
   "agents_only": "私人",
-  "private_content_notice": "終端使用者不能存取此內容。",
+  "private_content_notice": "一般使用者不能存取此內容。",
   "modal": {
     "close": "關閉",
     "copy": "新增至評論"
