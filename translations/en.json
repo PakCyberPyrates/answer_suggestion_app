@@ -16,7 +16,7 @@
         },
         "helpText": {
           "title": "Help text for the number of result field",
-          "value": "Number of results to display (default: 10, max: 100)."
+          "value": "Number of results to display (default: 10, min: 1, max: 100)."
         }
       },
       "custom_host": {
