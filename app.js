@@ -12,7 +12,6 @@
 
       // AJAX EVENTS
       'searchHelpCenter.done': 'searchHelpCenterDone',
-      'searchWebPortal.done': 'searchWebPortalDone',
       'getHcArticle.done': 'getHcArticleDone',
       'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
       'settings.done': 'settingsDone',
@@ -88,31 +87,13 @@
           url: url,
           data: data
         };
-      },
-
-      searchWebPortal: function(query){
-        return {
-          url: helpers.fmt('/api/v2/search.json?per_page=%@&query=%@ type:topic', this.queryLimit(), query),
-          type: 'GET'
-        };
-      },
-
-      fetchTopicsWithForums: function(ids){
-        return {
-          url: helpers.fmt('/api/v2/topics/show_many.json?ids=%@&include=forums', ids.join(',')),
-          type: 'POST'
-        };
       }
     },
 
     search: function(query) {
       this.switchTo('spinner');
 
-      if (this.setting('search_hc')) {
-        this.ajax('searchHelpCenter', query);
-      } else {
-        this.ajax('searchWebPortal', query);
-      }
+      this.ajax('searchHelpCenter', query);
     },
 
     created: function() {
@@ -234,75 +215,39 @@
     },
 
     searchHelpCenterDone: function(data) {
-      this.renderList(this.formatHcEntries(data.results));
-    },
-
-    searchWebPortalDone: function(data){
-      if (_.isEmpty(data.results))
-        return this.switchTo('no_entries');
-
-      var topics = data.results,
-          topicIds = _.map(topics, function(topic) { return topic.id; });
-
-      this.ajax('fetchTopicsWithForums', topicIds)
-        .done(function(data){
-          var entries = this.formatEntries(topics, data);
-          this.store('entries', entries);
-          this.renderList(entries);
-        });
+      this.renderList(this.formatHcArticles(data.results));
     },
 
     renderList: function(data){
-      if (_.isEmpty(data.entries)) {
-        this.switchTo('no_entries');
+      if (_.isEmpty(data.articles)) {
+        this.switchTo('no_articles');
       } else {
         this.switchTo('list', data);
         this.$('.brand-logo').tooltip();
       }
     },
 
-    formatEntries: function(topics, result){
-      var entries = _.inject(topics, function(memo, topic){
-        var forum = _.find(result.forums, function(f) { return f.id == topic.forum_id; });
-        var entry = {
-          id: topic.id,
-          url: helpers.fmt("%@entries/%@", this.baseUrl(), topic.id),
-          title: topic.title,
-          body: topic.body,
-          agent_only: !!forum.access.match("agents only")
-        };
-
-        if ( !(this.setting('exclude_agent_only') && entry.agent_only)){
-          memo.push(entry);
-        }
-
-        return memo;
-      }, [], this);
-
-      return { entries: entries.slice(0,this.numberOfDisplayableEntries()) };
-    },
-
-    formatHcEntries: function(result){
-      var slicedResult = result.slice(0, this.numberOfDisplayableEntries());
-      var entries = _.inject(slicedResult, function(memo, entry) {
-        var title = entry.name,
-            zendeskUrl = entry.html_url.match(this.zendeskRegex),
+    formatHcArticles: function(result){
+      var slicedResult = result.slice(0, this.numberOfDisplayableArticles());
+      var articles = _.inject(slicedResult, function(memo, article) {
+        var title = article.name,
+            zendeskUrl = article.html_url.match(this.zendeskRegex),
             subdomain = zendeskUrl && zendeskUrl[1];
 
         memo.push({
-          id: entry.id,
-          url: entry.html_url,
-          title: entry.name,
+          id: article.id,
+          url: article.html_url,
+          title: article.name,
           subdomain: subdomain,
-          body: entry.body,
-          brandName: entry.brand_name,
-          brandLogo: this.brandsInfo && this.brandsInfo[entry.brand_name] || this.DEFAULT_LOGO_URL,
+          body: article.body,
+          brandName: article.brand_name,
+          brandLogo: this.brandsInfo && this.brandsInfo[article.brand_name] || this.DEFAULT_LOGO_URL,
           isMultibrand: this.isMultibrand
         });
         return memo;
       }, [], this);
 
-      return { entries: entries };
+      return { articles: articles };
     },
 
     processSearchFromInput: function() {
@@ -325,7 +270,7 @@
       $link.parent().parent().parent().removeClass('open');
       var $modal = this.$("#detailsModal");
       $modal.html(this.renderTemplate('modal', {
-        title: $link.closest('.entry').data('title'),
+        title: $link.closest('.article').data('title'),
         link: $link.attr('href')
       }));
       $modal.modal();
@@ -354,24 +299,12 @@
       return this.appendToComment(content);
     },
 
-    renderTopicContent: function(id) {
-      var topic = _.find(this.store('entries').entries, function(entry) {
-        return entry.id == id;
-      });
-      this.updateModalContent(topic.body);
-      if (this.isAgentOnlyContent(topic)) { this.renderAgentOnlyAlert(); }
-    },
-
     getContentFor: function($link) {
-      if (this.setting('search_hc')) {
-        var subdomain = $link.data('subdomain');
-        if (!subdomain || subdomain !== this.currentAccount().subdomain()) {
-          this.updateModalContent($link.data('articleBody'));
-        } else {
-          this.ajax('getHcArticle', $link.data('id'));
-        }
+      var subdomain = $link.data('subdomain');
+      if (!subdomain || subdomain !== this.currentAccount().subdomain()) {
+        this.updateModalContent($link.data('articleBody'));
       } else {
-        this.renderTopicContent($link.data('id'));
+        this.ajax('getHcArticle', $link.data('id'));
       }
     },
 
@@ -383,17 +316,12 @@
       return _.map(this.I18n.t("stop_words").split(','), function(word) { return word.trim(); });
     }),
 
-    numberOfDisplayableEntries: function(){
+    numberOfDisplayableArticles: function(){
       return this.setting('nb_entries') || this.defaultNumberOfEntriesToDisplay;
     },
 
     queryLimit: function(){
-      // ugly hack to return more results than needed because we filter out agent only content
-      if (this.setting('exclude_agent_only') && !this.setting('search_hc')) {
-        return this.numberOfDisplayableEntries() * 2;
-      } else {
-        return this.numberOfDisplayableEntries();
-      }
+      return this.numberOfDisplayableArticles();
     },
 
     removeStopWords: function(str, stop_words){

@@ -42,10 +42,10 @@ p.spinner_text {
   min-height: 20px;
 }
 
-.entries {
+.articles {
   padding-top: 10px;
 }
-.entry-text {
+.article-text {
   padding-left: 0.3em;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -1,9 +1,9 @@
-{{#if entries}}
+{{#if articles}}
 <div class="well well-small">
   <p>{{t "help_text"}}</p>
-  <div class="entries">
-  {{#each entries}}
-  <div class="row-fluid entry" data-title="{{title}}" >
+  <div class="articles">
+  {{#each articles}}
+  <div class="row-fluid article" data-title="{{title}}" >
     <div class="span10">
       <div class="dropdown">
         <a class="dropdown-toggle pull-left" data-toggle="dropdown"><i class="icon-cog"></i></a>
@@ -19,7 +19,7 @@
           </li>
         </ul>
       </div>
-      <div class="entry-text">
+      <div class="article-text">
         <a href="{{url}}" class="main preview_link" title="{{title}}"
           data-id="{{id}}" data-subdomain="{{subdomain}}" data-article-body="{{body}}">
           {{#if isMultibrand}}
