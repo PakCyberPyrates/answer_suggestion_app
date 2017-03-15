@@ -105,10 +105,7 @@ const App = {
     this.when(
       this.ajax('getBrands'),
       this.ajax('getLocales')
-    ).then(function(brandsResponse, localeResponse) {
-      var brandsData = brandsResponse[0],
-          localeData = localeResponse[0];
-
+    ).then(function(brandsData, localeData) {
       var brands = this.filterBrands(brandsData.brands);
       this.isMultibrand = brands.length > 1;
 
@@ -123,10 +120,14 @@ const App = {
   },
 
   initialize: function(){
-    this.useRichText = this.ticket().comment().useRichText();
+    this.zafClient.get('ticket.comment.useRichText').then(data => {
+      this.useRichText = data['ticket.comment.useRichText'];
+    });
 
-    this.ajax('settings').then(function() {
-      if (_.isEmpty(this.ticket().subject())) {
+    this.zafClient.get('ticket.subject').then(data => {
+      this.ticketSubject = data['ticket.subject'];
+    }).then(this.ajax('settings').then(function() {
+      if (_.isEmpty(this.ticketSubject)) {
         return this.switchTo('no_subject');
       }
 
@@ -136,7 +137,7 @@ const App = {
       } else {
         this.switchTo('list');
       }
-    }.bind(this));
+    }.bind(this)));
   },
 
   settingsDone: function(data) {
@@ -263,7 +264,10 @@ const App = {
       if (host[host.length - 1] !== '/') { host += '/'; }
       return host;
     }
-    return helpers.fmt("https://%@.zendesk.com/", this.currentAccount().subdomain());
+
+    this.zafClient.get('currentAccount.subdomain').then(data => {
+      return helpers.fmt("https://%@.zendesk.com/", data);
+    });
   },
 
   previewLink: function(event){
@@ -302,16 +306,20 @@ const App = {
   },
 
   getContentFor: function($link) {
-    var subdomain = $link.data('subdomain');
-    if (!subdomain || subdomain !== this.currentAccount().subdomain()) {
-      this.updateModalContent($link.data('articleBody'));
-    } else {
-      this.ajax('getHcArticle', $link.data('id'));
-    }
+    this.zafClient.get('currentAccount.subdomain').then(data => {
+      var subdomain = $link.data('subdomain'),
+          currentAccountSubdomain = data['currentAccount.subdomain'];
+
+      if (!subdomain || subdomain !== currentAccountSubdomain) {
+        this.updateModalContent($link.data('articleBody'));
+      } else {
+        this.ajax('getHcArticle', $link.data('id'));
+      }
+    });
   },
 
   appendToComment: function(text){
-    return this.useRichText ? this.comment().appendHtml(text) : this.comment().appendText(text);
+    return this.useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
   },
 
   stop_words: _.memoize(function(){
@@ -365,7 +373,7 @@ const App = {
   },
 
   subjectSearchQuery: function(s){
-    return this.removeStopWords(this.ticket().subject(), this.stop_words());
+    return this.removeStopWords(this.ticketSubject, this.stop_words());
   },
 
   toggleAppContainer: function(){
