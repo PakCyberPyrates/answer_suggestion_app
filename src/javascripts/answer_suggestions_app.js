@@ -126,7 +126,7 @@ const App = {
 
     this.zafClient.get('ticket.subject').then(data => {
       this.ticketSubject = data['ticket.subject'];
-    }).then(this.ajax('settings').then(function() {
+    }).then(function() {
       if (_.isEmpty(this.ticketSubject)) {
         return this.switchTo('no_subject');
       }
@@ -137,7 +137,9 @@ const App = {
       } else {
         this.switchTo('list');
       }
-    }.bind(this)));
+    }.bind(this));
+
+    this.ajax('settings');
   },
 
   settingsDone: function(data) {
