@@ -10,10 +10,13 @@
   <body>
     <div class="app-container u-epsilon">
       <div class="input-append custom-search">
-        <input type="text" class="search-input">
-        <button class="btn search" type="button">
-          <i class="icon-search"></i>
-        </button>
+        <input type="text" class="search-input c-txt__input" id="hcSearch">
+        <a class="btn search c-btn c-btn--primary c-btn--medium c-btn--icon" type="button">
+          <svg class="c-btn--svg">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/index.svg#zd-svg-icon-26-search">
+            </use>
+          </svg>
+        </a>
       </div>
 
       <section data-main></section>
