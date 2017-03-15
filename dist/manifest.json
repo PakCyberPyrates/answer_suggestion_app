@@ -23,10 +23,12 @@
   ],
   "defaultLocale": "en",
   "private": false,
-  "location": [
-    "ticket_sidebar",
-    "new_ticket_sidebar"
-  ],
+  "location": {
+    "support": {
+      "ticket_sidebar": "assets/index.html",
+      "new_ticket_sidebar": "assets/index.html"
+    }
+  },
   "frameworkVersion": "1.0",
   "version": "1.0.21"
 }
