@@ -1,10 +1,7 @@
 {{#if articles}}
-<div class="well well-small">
-  <p>{{t "help_text"}}</p>
-  <div class="articles">
+<div class="articles">
+  <p class="u-light u-mv-sm">{{t "help_text"}}</p>
   {{#each articles}}
-  <div class="row-fluid article" data-title="{{title}}" >
-    <div class="span10">
       <div class="dropdown">
         <a class="dropdown-toggle pull-left" data-toggle="dropdown"><i class="icon-cog"></i></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -19,6 +16,8 @@
           </li>
         </ul>
       </div>
+  <div class="row-fluid article l-grid u-mv-sm" data-title="{{title}}">
+    <div class="l-grid__item u-5/6">
       <div class="article-text">
         <a href="{{url}}" class="main preview_link" title="{{title}}"
           data-id="{{id}}" data-subdomain="{{subdomain}}" data-article-body="{{body}}">
@@ -31,12 +30,11 @@
       </div>
     </div>
     {{#if agent_only}}
-    <div class="span2">
+    <div class="l-grid__item u-1/6">
       <span class="label label-warning">{{t "agents_only"}}</span>
     </div>
     {{/if}}
   </div>
   {{/each}}
-  </div>
 </div>
 {{/if}}

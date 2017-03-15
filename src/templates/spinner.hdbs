@@ -1,2 +1,4 @@
-<span class='spinner'></span>
-<p class='spinner_text'>{{t "spinner"}}</p>
+<div class="u-mv-sm">
+  <span class='spinner'></span>
+  <p class='spinner_text'>{{t "spinner"}}</p>
+</div>

@@ -8,7 +8,20 @@
     {{/each}}
   </head>
   <body>
-    <section data-main></section>
+    <div class="app-container u-epsilon">
+      <div class="input-append custom-search">
+        <input type="text" class="search-input">
+        <button class="btn search" type="button">
+          <i class="icon-search"></i>
+        </button>
+      </div>
+
+      <section data-main></section>
+
+      <div class="modal hide fade" tabindex="-1" role="dialog" id="detailsModal">
+      </div>
+    </div>
+
     {{#each htmlWebpackPlugin.options.vendorJs}}
       <script type="text/javascript" src="{{this}}"></script>
     {{/each}}
