@@ -297,19 +297,21 @@ const App = {
     var title = event.target.title;
     var link = event.target.href;
 
-    if (this.useMarkdown) {
-      content = helpers.fmt("[%@](%@)", title, link);
-    }
-    else if (this.useRichText){
-      content = helpers.fmt("<a href='%@' target='_blank'>%@</a>", _.escape(link), _.escape(title));
-    }
-    else {
-      if (this.setting('include_title')) {
-        content = title + ' - ';
+    this.useRichTextPromise.then(() => {
+      if (this.useMarkdown) {
+        content = helpers.fmt("[%@](%@)", title, link);
       }
-      content += link;
+      else if (this.useRichText){
+        content = helpers.fmt("<a href='%@' target='_blank'>%@</a>", _.escape(link), _.escape(title));
+      }
+      else {
+        if (this.setting('include_title')) {
+          content = title + ' - ';
+        }
+        content += link;
+      }
+      return this.appendToComment(content);
     }
-    return this.appendToComment(content);
   },
 
   getContentFor: function($link) {
