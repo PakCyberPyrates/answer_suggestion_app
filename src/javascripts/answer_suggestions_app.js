@@ -241,8 +241,7 @@ const App = {
   formatHcArticles: function(result){
     var slicedResult = result.slice(0, this.numberOfDisplayableArticles());
     var articles = _.inject(slicedResult, function(memo, article) {
-      var title = article.name,
-          zendeskUrl = article.html_url.match(this.zendeskRegex),
+      var zendeskUrl = article.html_url.match(this.zendeskRegex),
           subdomain = zendeskUrl && zendeskUrl[1];
 
       memo.push({
@@ -382,7 +381,7 @@ const App = {
       .replace(/\s{2,}/g," ");
   },
 
-  subjectSearchQuery: function(s){
+  subjectSearchQuery: function(){
     return this.removeStopWords(this.ticketSubject, this.stop_words());
   },
 
