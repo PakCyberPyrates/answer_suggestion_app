@@ -120,8 +120,12 @@ const App = {
   },
 
   initialize: function(){
-    this.zafClient.get('ticket.comment.useRichText').then(data => {
+    this.useRichTextPromise = this.zafClient.get('ticket.comment.useRichText').then(data => {
       this.useRichText = data['ticket.comment.useRichText'];
+    });
+
+    this.currentUserLocalePromise = this.zafClient.get('currentUser.locale').then(user => {
+      this.currentUserLocale = user['currentUser.locale'];
     });
 
     this.zafClient.get('ticket.subject').then(data => {
@@ -147,14 +151,16 @@ const App = {
   },
 
   hcArticleLocaleContent: function(data) {
-    var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : this.currentUser().locale(),
-        translations = data.article.translations;
+    this.currentUserLocalePromise.then(() => {
+      var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : this.currentUserLocale,
+      translations = data.article.translations;
 
-    var localizedTranslation = _.find(translations, function(translation) {
-      return translation.locale.toLowerCase() === currentLocale.toLowerCase();
+      var localizedTranslation = _.find(translations, function(translation) {
+        return translation.locale.toLowerCase() === currentLocale.toLowerCase();
+      });
+
+      return localizedTranslation && localizedTranslation.body || translations[0].body;
     });
-
-    return localizedTranslation && localizedTranslation.body || translations[0].body;
   },
 
   renderAgentOnlyAlert: function() {
@@ -186,20 +192,20 @@ const App = {
   getLocalesDone: function(data) {
     if (!this.isMultilocale) return;
 
-    var options = _.map(data.locales, function(locale) {
-      var data = {
-        value: locale.locale,
-        label: locale.name
-      };
-      if (this.currentUser().locale() === locale.locale) { data.selected = 'selected'; }
-      return data;
-    }, this);
+    this.zafClient.get('currentUser.locale').then(user => {
+      var options = _.map(data.locales, function(locale) {
+        var data = {
+          value: locale.locale,
+          label: locale.name
+        };
+        if (user['currentUser.locale'] === locale.locale) { data.selected = 'selected'; }
+        return data;
+      }, this);
 
-    this.$('.custom-search').before(
-      this.renderTemplate('locale_filter', { options: options })
-    );
-
-    this.$('.locale-filter').zdSelectMenu();
+      this.$('.custom-search').before(
+        this.renderTemplate('locale_filter', { options: options })
+      );
+    });
   },
 
   getHcArticleDone: function(data) {
@@ -321,7 +327,9 @@ const App = {
   },
 
   appendToComment: function(text){
-    return this.useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
+    this.useRichTextPromise.then(() => {
+      return this.useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
+    });
   },
 
   stop_words: _.memoize(function(){
