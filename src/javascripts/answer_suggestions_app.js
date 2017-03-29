@@ -121,11 +121,11 @@ const App = {
 
   initialize: function(){
     this.useRichTextPromise = this.zafClient.get('ticket.comment.useRichText').then(data => {
-      this.useRichText = data['ticket.comment.useRichText'];
+      return data['ticket.comment.useRichText'];
     });
 
     this.currentUserLocalePromise = this.zafClient.get('currentUser.locale').then(user => {
-      this.currentUserLocale = user['currentUser.locale'];
+      return user['currentUser.locale'];
     });
 
     this.zafClient.get('ticket.subject').then(data => {
@@ -151,8 +151,8 @@ const App = {
   },
 
   hcArticleLocaleContent: function(data) {
-    this.currentUserLocalePromise.then(() => {
-      var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : this.currentUserLocale,
+    this.currentUserLocalePromise.then((currentUserLocale) => {
+      var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : currentUserLocale,
       translations = data.article.translations;
 
       var localizedTranslation = _.find(translations, function(translation) {
@@ -297,11 +297,14 @@ const App = {
     var title = event.target.title;
     var link = event.target.href;
 
-    this.useRichTextPromise.then(() => {
+    this.when(
+      this.useRichTextPromise,
+      this.ajax('settings'),
+    ).then(function(useRichText) {
       if (this.useMarkdown) {
         content = helpers.fmt("[%@](%@)", title, link);
       }
-      else if (this.useRichText){
+      else if (useRichText){
         content = helpers.fmt("<a href='%@' target='_blank'>%@</a>", _.escape(link), _.escape(title));
       }
       else {
@@ -311,7 +314,7 @@ const App = {
         content += link;
       }
       return this.appendToComment(content);
-    }
+    });
   },
 
   getContentFor: function($link) {
@@ -328,8 +331,8 @@ const App = {
   },
 
   appendToComment: function(text){
-    this.useRichTextPromise.then(() => {
-      return this.useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
+    this.useRichTextPromise.then((useRichText) => {
+      return useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
     });
   },
 
