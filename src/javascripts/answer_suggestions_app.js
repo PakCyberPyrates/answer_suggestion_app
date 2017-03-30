@@ -135,7 +135,6 @@ const App = {
       return data.settings.tickets.markdown_ticket_comments;
     });
 
-
     this.ticketSubjectPromise.then((ticketSubject) => {
       if (_.isEmpty(ticketSubject)) {
         return this.switchTo('no_subject');
@@ -148,8 +147,6 @@ const App = {
         this.switchTo('list');
       }
     });
-
-    this.ajax('settings');
   },
 
   hcArticleLocaleContent: function(data) {
