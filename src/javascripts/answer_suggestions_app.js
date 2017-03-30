@@ -70,12 +70,12 @@ const App = {
           };
 
       if (this.isMultilocale) {
-        data.locale = this.$('.locale-filter').zdSelectMenu('value');
+        // data.locale = this.$('.locale-filter').zdSelectMenu('value');
       }
 
       if (this.isMultibrand) {
         url = '/api/v2/search.json';
-        data.brand_id = this.$('.brand-filter').zdSelectMenu('value');
+        // data.brand_id = this.$('.brand-filter').zdSelectMenu('value');
         data.query = 'type:article ' + data.query;
 
         if (data.brand_id !== 'any') {
@@ -150,8 +150,8 @@ const App = {
   },
 
   hcArticleLocaleContent: function(data) {
-    this.currentUserLocalePromise.then((currentUserLocale) => {
-      var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : currentUserLocale,
+    return this.currentUserLocalePromise.then((currentUserLocale) => {
+      var currentLocale = this.isMultilocale ? 'foo' : currentUserLocale,
       translations = data.article.translations;
 
       var localizedTranslation = _.find(translations, function(translation) {
@@ -212,8 +212,9 @@ const App = {
       this.ajax('getSectionAccessPolicy', data.article.section_id);
     }
 
-    var modalContent = this.hcArticleLocaleContent(data);
-    this.updateModalContent(modalContent);
+    this.hcArticleLocaleContent(data).then(modalContent => {
+      this.updateModalContent(modalContent);
+    });
   },
 
   updateModalContent: function(modalContent) {
@@ -299,7 +300,7 @@ const App = {
     this.when(
       this.useRichTextPromise,
       this.useMarkdownPromise,
-    ).then(function(useRichText, useMarkdown) {
+    ).then((useRichText, useMarkdown) => {
       if (useMarkdown) {
         content = helpers.fmt("[%@](%@)", title, link);
       }
