@@ -16,7 +16,6 @@ const App = {
     'searchHelpCenter.done': 'searchHelpCenterDone',
     'getHcArticle.done': 'getHcArticleDone',
     'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
-    'settings.done': 'settingsDone',
 
     // DOM EVENTS
     'zd_ui_change .brand-filter': 'processSearchFromInput',
@@ -128,26 +127,29 @@ const App = {
       return user['currentUser.locale'];
     });
 
-    this.zafClient.get('ticket.subject').then(data => {
-      this.ticketSubject = data['ticket.subject'];
-    }).then(function() {
-      if (_.isEmpty(this.ticketSubject)) {
+    this.ticketSubjectPromise = this.zafClient.get('ticket.subject').then(data => {
+      return data['ticket.subject'];
+    });
+
+    this.useMarkdownPromise = this.ajax('settings').then(data => {
+      return data.settings.tickets.markdown_ticket_comments;
+    });
+
+
+    this.ticketSubjectPromise.then((ticketSubject) => {
+      if (_.isEmpty(ticketSubject)) {
         return this.switchTo('no_subject');
       }
 
-      var subject = this.subjectSearchQuery();
+      var subject = this.subjectSearchQuery(ticketSubject);
       if (subject) {
         this.search(subject);
       } else {
         this.switchTo('list');
       }
-    }.bind(this));
+    });
 
     this.ajax('settings');
-  },
-
-  settingsDone: function(data) {
-    this.useMarkdown = data.settings.tickets.markdown_ticket_comments;
   },
 
   hcArticleLocaleContent: function(data) {
@@ -299,9 +301,9 @@ const App = {
 
     this.when(
       this.useRichTextPromise,
-      this.ajax('settings'),
-    ).then(function(useRichText) {
-      if (this.useMarkdown) {
+      this.useMarkdownPromise,
+    ).then(function(useRichText, useMarkdown) {
+      if (useMarkdown) {
         content = helpers.fmt("[%@](%@)", title, link);
       }
       else if (useRichText){
@@ -386,8 +388,8 @@ const App = {
       .replace(/\s{2,}/g," ");
   },
 
-  subjectSearchQuery: function(){
-    return this.removeStopWords(this.ticketSubject, this.stop_words());
+  subjectSearchQuery: function(ticketSubject){
+    return this.removeStopWords(ticketSubject, this.stop_words());
   },
 
   toggleAppContainer: function(){
