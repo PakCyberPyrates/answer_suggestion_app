@@ -70,12 +70,12 @@ const App = {
           };
 
       if (this.isMultilocale) {
-        // data.locale = this.$('.locale-filter').zdSelectMenu('value');
+        data.locale = this.$('.locale-filter').zdSelectMenu('value');
       }
 
       if (this.isMultibrand) {
         url = '/api/v2/search.json';
-        // data.brand_id = this.$('.brand-filter').zdSelectMenu('value');
+        data.brand_id = this.$('.brand-filter').zdSelectMenu('value');
         data.query = 'type:article ' + data.query;
 
         if (data.brand_id !== 'any') {
