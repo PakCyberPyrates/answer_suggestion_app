@@ -313,7 +313,7 @@ const App = {
         }
         content += link;
       }
-      return this.appendToComment(content);
+      this.appendToComment(content);
     });
   },
 
@@ -332,7 +332,7 @@ const App = {
 
   appendToComment: function(text){
     this.useRichTextPromise.then((useRichText) => {
-      return useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
+      useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
     });
   },
 
