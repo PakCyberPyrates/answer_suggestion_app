@@ -265,18 +265,6 @@ const App = {
     if (query && query.length) { this.search(query); }
   },
 
-  baseUrl: function() {
-    if (this.setting('custom_host')) {
-      var host = this.setting('custom_host');
-      if (host[host.length - 1] !== '/') { host += '/'; }
-      return host;
-    }
-
-    this.zafClient.get('currentAccount.subdomain').then(data => {
-      return helpers.fmt("https://%@.zendesk.com/", data);
-    });
-  },
-
   previewLink: function(event){
     event.preventDefault();
     var $link = this.$(event.target).closest('a');
