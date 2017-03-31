@@ -22,6 +22,7 @@ const App = {
     'zd_ui_change .locale-filter': 'processSearchFromInput',
     'click a.preview_link': 'previewLink',
     'click a.copy_link': 'copyLink',
+    'click .js-menu': 'openMenu',
     //rich text editor has built in drag and drop of links so we should only fire
     //the dragend event when users are using Markdown or text.
     'dragend': function(event){ if (!this.useRichText) this.copyLink(event); },
@@ -29,7 +30,7 @@ const App = {
     'keyup .custom-search input': function(event){
       if (event.keyCode === 13) { return this.processSearchFromInput(); }
     },
-    'click .custom-search .search-btn': 'processSearchFromInput'
+    'click .btn.search': 'processSearchFromInput'
   },
 
   requests: {
@@ -395,6 +396,38 @@ const App = {
     return _.filter(brands, function(element){
       return element.active && element.help_center_state === "enabled";
     });
+  },
+
+  openMenu: function(event) {
+    event.preventDefault();
+    var $this = this.$(event.target).closest('a'),
+        elementBottom = $this.parent().position().top + $this.parent().outerHeight(true),
+        distanceToDocumentBottom = $(document).height() - elementBottom;
+
+    var $menu = $this.parent().find('.c-menu');
+        $menu.css({ 'position':'absolute', 'visibility':'hidden', 'display':'block' });
+    var menuHeight = $menu.height(),
+        canFitBelow = distanceToDocumentBottom > (menuHeight + 20);
+        // console.log(distanceToDocumentBottom, menuHeight + 20, canFitBelow);
+        $menu.removeAttr('style');
+
+    if ($this.hasClass('is-active')) {
+      $(document).trigger('click');
+    } else {
+      $(document).trigger('click');
+
+      $this.parent().find('.c-menu')
+        .addClass('is-open')
+        .attr('aria-hidden', false);
+
+      $this.addClass('is-active');
+
+      if (canFitBelow) {
+        $this.parent().find('.c-menu').removeClass('c-arrow--b').addClass('c-arrow--t').removeClass('c-menu--up').addClass('c-menu--down');
+      }
+    }
+
+    return false;
   }
 };
 

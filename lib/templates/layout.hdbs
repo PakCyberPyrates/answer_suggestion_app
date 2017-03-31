@@ -8,7 +8,25 @@
     {{/each}}
   </head>
   <body>
-    <section data-main></section>
+    <div class="app-container u-m-xs">
+      <div class="input-append custom-search l-grid l-grid--xs u-cf">
+        <span class="l-grid__item u-5/6 c-txt">
+          <input type="text" class="search-input c-txt__input" id="hcSearch">
+        </span>
+        <span class="l-grid__item u-1/6 c-btn__search u-float-right">
+          <a class="btn search c-btn c-btn--primary c-btn--medium c-btn--icon" role="button">
+            <svg class="c-btn--svg">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/index.svg#zd-svg-icon-26-search">
+              </use>
+            </svg>
+          </a>
+        </span>
+      </div>
+
+      <section data-main/>
+
+    </div>
+
     {{#each htmlWebpackPlugin.options.vendorJs}}
       <script type="text/javascript" src="{{this}}"></script>
     {{/each}}

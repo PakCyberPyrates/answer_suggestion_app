@@ -1,17 +1,14 @@
+.app-container {
+  min-height: 264px;
+}
+
+@import "menus";
+@import "search";
+@import "tooltips";
+
 ul {
   padding-top: 5px;
   margin-left: 0.5em;
-}
-
-.input-append {
-  input {
-    width: 74%;
-  }
-
-  .search-btn {
-    width: 21%;
-    border-radius: 0;
-  }
 }
 
 span.spinner {
@@ -42,9 +39,6 @@ p.spinner_text {
   min-height: 20px;
 }
 
-.articles {
-  padding-top: 10px;
-}
 .article-text {
   padding-left: 0.3em;
   text-overflow: ellipsis;
@@ -53,15 +47,17 @@ p.spinner_text {
   padding-left:none;
 }
 
-section div.well.well-small {
-  margin-bottom: 0px;
-}
-
 .brand-filter, .locale-filter {
   margin-bottom: 5px;
 }
 
 .brand-logo {
   width: 14px;
-  vertical-align: bottom;
+  vertical-align: sub;
+}
+
+.modal-button {
+  float: right;
+  position: absolute;
+  right: 2em;
 }
