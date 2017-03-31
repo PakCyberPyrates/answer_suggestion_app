@@ -16,7 +16,7 @@
         <span class="l-grid__item u-1/6 c-btn__search u-float-right">
           <a class="btn search c-btn c-btn--primary c-btn--medium c-btn--icon" role="button">
             <svg class="c-btn--svg">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/index.svg#zd-svg-icon-26-search">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="./index.svg#zd-svg-icon-26-search">
               </use>
             </svg>
           </a>
