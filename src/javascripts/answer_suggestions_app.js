@@ -18,10 +18,10 @@ const App = {
     'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
 
     // DOM EVENTS
-    'zd_ui_change .brand-filter': 'processSearchFromInput',
-    'zd_ui_change .locale-filter': 'processSearchFromInput',
     'click a.preview_link': 'previewLink',
     'click a.copy_link': 'copyLink',
+    'click .brand-filter .c-menu__item': 'processSearchFromInput',
+    'click .locale-filter .c-menu__item': 'processSearchFromInput',
     'click .js-menu': 'openMenu',
     //rich text editor has built in drag and drop of links so we should only fire
     //the dragend event when users are using Markdown or text.
@@ -71,12 +71,12 @@ const App = {
           };
 
       if (this.isMultilocale) {
-        data.locale = this.$('.locale-filter').zdSelectMenu('value');
+        data.locale = this.getLocaleFilterValue();
       }
 
       if (this.isMultibrand) {
         url = '/api/v2/search.json';
-        data.brand_id = this.$('.brand-filter').zdSelectMenu('value');
+        data.brand_id = this.getBrandFilterValue();
         data.query = 'type:article ' + data.query;
 
         if (data.brand_id !== 'any') {
@@ -90,6 +90,14 @@ const App = {
         data: data
       };
     }
+  },
+
+  getBrandFilterValue: function() {
+    return this.$('#brand-filter').attr('data-val');
+  },
+
+  getLocaleFilterValue: function() {
+    return this.$('#locale-filter').attr('data-val');
   },
 
   search: function(query) {
@@ -120,6 +128,8 @@ const App = {
   },
 
   initialize: function(){
+    this.$('.search-input').attr('placeholder', this.I18n.t('layout.placeholder_text'));
+
     this.useRichTextPromise = this.zafClient.get('ticket.comment.useRichText').then(data => {
       return data['ticket.comment.useRichText'];
     });
@@ -152,7 +162,7 @@ const App = {
 
   hcArticleLocaleContent: function(data) {
     return this.currentUserLocalePromise.then((currentUserLocale) => {
-      var currentLocale = this.isMultilocale ? 'foo' : currentUserLocale,
+      var currentLocale = this.isMultilocale ? this.getLocaleFilterValue() : currentUserLocale,
       translations = data.article.translations;
 
       var localizedTranslation = _.find(translations, function(translation) {
@@ -181,7 +191,6 @@ const App = {
       this.$('.custom-search').before(
         this.renderTemplate('brand_filter', { options: options })
       );
-      this.$('.brand-filter').zdSelectMenu();
     }
 
     this.brandsInfo = _.object(_.map(filteredBrands, function(brand) {
@@ -198,7 +207,7 @@ const App = {
           value: locale.locale,
           label: locale.name
         };
-        if (user['currentUser.locale'] === locale.locale) { data.selected = 'selected'; }
+        if (user['currentUser.locale'] === locale.locale) { data.selected = 'is-selected'; }
         return data;
       }, this);
 
@@ -262,8 +271,10 @@ const App = {
   },
 
   processSearchFromInput: function() {
-    var query = this.removePunctuation(this.$('.custom-search input').val());
-    if (query && query.length) { this.search(query); }
+    var query = this.removePunctuation(this.$('.custom-search input').val()),
+        subjectSearchQuery = this.subjectSearchQuery();
+    if (! (query || subjectSearchQuery)) { return; }
+    query && query.length ? this.search(query) : this.search(subjectSearchQuery);
   },
 
   previewLink: function(event){
@@ -376,7 +387,9 @@ const App = {
   },
 
   subjectSearchQuery: function(ticketSubject){
-    return this.removeStopWords(ticketSubject, this.stop_words());
+    if (this.ticketSubject) { return this.removeStopWords(this.ticketSubject, this.stop_words()); }
+
+    return null;
   },
 
   toggleAppContainer: function(){

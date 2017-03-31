@@ -1,5 +1,64 @@
-<select class="locale-filter" name="locale" data-zd-type="select_menu">
-  {{#each options}}
-    <option value="{{value}}" {{selected}}>{{label}}</option>
-  {{/each}}
-</select>
+<div class="locale-filter">
+  <div class="c-txt">
+    <button class="c-txt__input c-txt__input--select" id="locale-filter"><span dir="ltr"><span></span></span></button>
+  </div>
+
+  <ul class="c-menu c-menu--down is-hidden" style="display: none;" aria-hidden="true">
+    {{#each options}}
+      <li class="c-menu__item {{ selected }}" data-val="{{ value }}">{{label}}</li>
+    {{/each}}
+  </ul>
+</div>
+
+<script>
+$(document).ready(function() {
+  var $dropdownButton = $(this).find('#locale-filter'),
+      $dropdownOptions = $dropdownButton.parent().siblings('.c-menu'),
+      $currentLocale = $dropdownOptions.find('.is-selected');
+  $dropdownButton.first('span').text($currentLocale.text())
+    .attr('data-val', $currentLocale.attr('data-val'));
+
+  $('.c-txt__input--select').click(function() {
+    var $this = $(this);
+    var $menu = $(this).parent().siblings('.c-menu');
+
+    $this.toggleClass('is-open');
+    $menu.toggleClass('is-open', $this.hasClass('is-open'));
+
+    if ($menu.hasClass('is-open')) {
+      $menu.parent('.u-position-relative').css('zIndex', 1);
+      $menu.show();
+    } else {
+      $menu.hide();
+      $menu.parent('.u-position-relative').css('zIndex', '');
+    }
+
+    return false;
+  });
+
+  $('.c-menu__item').click(function() {
+    var $dropdownOptions = $(this).parent(),
+        $dropdownButton = $dropdownOptions.siblings('.c-txt').find('.c-txt__input--select'),
+        $currentlySelected = $dropdownOptions.find('.is-selected');
+
+    $dropdownButton.removeClass('is-open')
+      .first('span').text($(this).text())
+      .attr('data-val', $(this).attr('data-val'));
+
+    $dropdownOptions.removeClass('is-open').hide()
+      .parent('.u-position-relative').css('zIndex', '');
+
+    $currentlySelected.removeClass('is-selected');
+
+    $(this).addClass('is-selected');
+  });
+
+  $('.c-txt__label').click(function() {
+    var $select = $('#' + $(this).attr('for'));
+
+    $select.focus();
+
+    return false;
+  });
+});
+</script>
