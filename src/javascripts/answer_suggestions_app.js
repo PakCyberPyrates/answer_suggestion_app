@@ -16,7 +16,6 @@ const App = {
     'searchHelpCenter.done': 'searchHelpCenterDone',
     'getHcArticle.done': 'getHcArticleDone',
     'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
-    'settings.done': 'settingsDone',
 
     // DOM EVENTS
     'zd_ui_change .brand-filter': 'processSearchFromInput',
@@ -105,10 +104,7 @@ const App = {
     this.when(
       this.ajax('getBrands'),
       this.ajax('getLocales')
-    ).then(function(brandsResponse, localeResponse) {
-      var brandsData = brandsResponse[0],
-          localeData = localeResponse[0];
-
+    ).then(function(brandsData, localeData) {
       var brands = this.filterBrands(brandsData.brands);
       this.isMultibrand = brands.length > 1;
 
@@ -123,35 +119,47 @@ const App = {
   },
 
   initialize: function(){
-    this.useRichText = this.ticket().comment().useRichText();
+    this.useRichTextPromise = this.zafClient.get('ticket.comment.useRichText').then(data => {
+      return data['ticket.comment.useRichText'];
+    });
 
-    this.ajax('settings').then(function() {
-      if (_.isEmpty(this.ticket().subject())) {
+    this.currentUserLocalePromise = this.zafClient.get('currentUser.locale').then(user => {
+      return user['currentUser.locale'];
+    });
+
+    this.ticketSubjectPromise = this.zafClient.get('ticket.subject').then(data => {
+      return data['ticket.subject'];
+    });
+
+    this.useMarkdownPromise = this.ajax('settings').then(data => {
+      return data.settings.tickets.markdown_ticket_comments;
+    });
+
+    this.ticketSubjectPromise.then((ticketSubject) => {
+      if (_.isEmpty(ticketSubject)) {
         return this.switchTo('no_subject');
       }
 
-      var subject = this.subjectSearchQuery();
+      var subject = this.subjectSearchQuery(ticketSubject);
       if (subject) {
         this.search(subject);
       } else {
         this.switchTo('list');
       }
-    }.bind(this));
-  },
-
-  settingsDone: function(data) {
-    this.useMarkdown = data.settings.tickets.markdown_ticket_comments;
+    });
   },
 
   hcArticleLocaleContent: function(data) {
-    var currentLocale = this.isMultilocale ? this.$('.locale-filter').zdSelectMenu('value') : this.currentUser().locale(),
-        translations = data.article.translations;
+    return this.currentUserLocalePromise.then((currentUserLocale) => {
+      var currentLocale = this.isMultilocale ? 'foo' : currentUserLocale,
+      translations = data.article.translations;
 
-    var localizedTranslation = _.find(translations, function(translation) {
-      return translation.locale.toLowerCase() === currentLocale.toLowerCase();
+      var localizedTranslation = _.find(translations, function(translation) {
+        return translation.locale.toLowerCase() === currentLocale.toLowerCase();
+      });
+
+      return localizedTranslation && localizedTranslation.body || translations[0].body;
     });
-
-    return localizedTranslation && localizedTranslation.body || translations[0].body;
   },
 
   renderAgentOnlyAlert: function() {
@@ -183,20 +191,20 @@ const App = {
   getLocalesDone: function(data) {
     if (!this.isMultilocale) return;
 
-    var options = _.map(data.locales, function(locale) {
-      var data = {
-        value: locale.locale,
-        label: locale.name
-      };
-      if (this.currentUser().locale() === locale.locale) { data.selected = 'selected'; }
-      return data;
-    }, this);
+    this.zafClient.get('currentUser.locale').then(user => {
+      var options = _.map(data.locales, function(locale) {
+        var data = {
+          value: locale.locale,
+          label: locale.name
+        };
+        if (user['currentUser.locale'] === locale.locale) { data.selected = 'selected'; }
+        return data;
+      }, this);
 
-    this.$('.custom-search').before(
-      this.renderTemplate('locale_filter', { options: options })
-    );
-
-    this.$('.locale-filter').zdSelectMenu();
+      this.$('.custom-search').before(
+        this.renderTemplate('locale_filter', { options: options })
+      );
+    });
   },
 
   getHcArticleDone: function(data) {
@@ -204,8 +212,9 @@ const App = {
       this.ajax('getSectionAccessPolicy', data.article.section_id);
     }
 
-    var modalContent = this.hcArticleLocaleContent(data);
-    this.updateModalContent(modalContent);
+    this.hcArticleLocaleContent(data).then(modalContent => {
+      this.updateModalContent(modalContent);
+    });
   },
 
   updateModalContent: function(modalContent) {
@@ -232,8 +241,7 @@ const App = {
   formatHcArticles: function(result){
     var slicedResult = result.slice(0, this.numberOfDisplayableArticles());
     var articles = _.inject(slicedResult, function(memo, article) {
-      var title = article.name,
-          zendeskUrl = article.html_url.match(this.zendeskRegex),
+      var zendeskUrl = article.html_url.match(this.zendeskRegex),
           subdomain = zendeskUrl && zendeskUrl[1];
 
       memo.push({
@@ -257,15 +265,6 @@ const App = {
     if (query && query.length) { this.search(query); }
   },
 
-  baseUrl: function() {
-    if (this.setting('custom_host')) {
-      var host = this.setting('custom_host');
-      if (host[host.length - 1] !== '/') { host += '/'; }
-      return host;
-    }
-    return helpers.fmt("https://%@.zendesk.com/", this.currentAccount().subdomain());
-  },
-
   previewLink: function(event){
     event.preventDefault();
     var $link = this.$(event.target).closest('a');
@@ -286,32 +285,43 @@ const App = {
     var title = event.target.title;
     var link = event.target.href;
 
-    if (this.useMarkdown) {
-      content = helpers.fmt("[%@](%@)", title, link);
-    }
-    else if (this.useRichText){
-      content = helpers.fmt("<a href='%@' target='_blank'>%@</a>", _.escape(link), _.escape(title));
-    }
-    else {
-      if (this.setting('include_title')) {
-        content = title + ' - ';
+    this.when(
+      this.useRichTextPromise,
+      this.useMarkdownPromise,
+    ).then((useRichText, useMarkdown) => {
+      if (useMarkdown) {
+        content = helpers.fmt("[%@](%@)", title, link);
       }
-      content += link;
-    }
-    return this.appendToComment(content);
+      else if (useRichText){
+        content = helpers.fmt("<a href='%@' target='_blank'>%@</a>", _.escape(link), _.escape(title));
+      }
+      else {
+        if (this.setting('include_title')) {
+          content = title + ' - ';
+        }
+        content += link;
+      }
+      this.appendToComment(content);
+    });
   },
 
   getContentFor: function($link) {
-    var subdomain = $link.data('subdomain');
-    if (!subdomain || subdomain !== this.currentAccount().subdomain()) {
-      this.updateModalContent($link.data('articleBody'));
-    } else {
-      this.ajax('getHcArticle', $link.data('id'));
-    }
+    this.zafClient.get('currentAccount.subdomain').then(data => {
+      var subdomain = $link.data('subdomain'),
+          currentAccountSubdomain = data['currentAccount.subdomain'];
+
+      if (!subdomain || subdomain !== currentAccountSubdomain) {
+        this.updateModalContent($link.data('articleBody'));
+      } else {
+        this.ajax('getHcArticle', $link.data('id'));
+      }
+    });
   },
 
   appendToComment: function(text){
-    return this.useRichText ? this.comment().appendHtml(text) : this.comment().appendText(text);
+    this.useRichTextPromise.then((useRichText) => {
+      useRichText ? this.zafClient.invoke('comment.appendHtml', text) : this.zafClient.invoke('comment.appendText', text);
+    });
   },
 
   stop_words: _.memoize(function(){
@@ -364,8 +374,8 @@ const App = {
       .replace(/\s{2,}/g," ");
   },
 
-  subjectSearchQuery: function(s){
-    return this.removeStopWords(this.ticket().subject(), this.stop_words());
+  subjectSearchQuery: function(ticketSubject){
+    return this.removeStopWords(ticketSubject, this.stop_words());
   },
 
   toggleAppContainer: function(){
