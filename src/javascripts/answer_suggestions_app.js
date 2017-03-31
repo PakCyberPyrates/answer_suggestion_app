@@ -23,6 +23,7 @@ const App = {
     'click .brand-filter .c-menu__item': 'processSearchFromInput',
     'click .locale-filter .c-menu__item': 'processSearchFromInput',
     'click .js-menu': 'openMenu',
+    'click .c-txt__input--select': 'toggleSelect',
     //rich text editor has built in drag and drop of links so we should only fire
     //the dragend event when users are using Markdown or text.
     'dragend': function(event){ if (!this.useRichText) this.copyLink(event); },
@@ -245,6 +246,24 @@ const App = {
       this.switchTo('list', data);
       this.$('.brand-logo').tooltip();
     }
+  },
+
+  toggleSelect: function(event) {
+    var $select = this.$(event.target).closest('.c-txt__input--select');
+    var $menu = $select.parent().siblings('.c-menu');
+
+    $select.toggleClass('is-open');
+    $menu.toggleClass('is-open', $select.hasClass('is-open'));
+
+    if ($menu.hasClass('is-open')) {
+      $menu.parent('.u-position-relative').css('zIndex', 1);
+      $menu.show();
+    } else {
+      $menu.hide();
+      $menu.parent('.u-position-relative').css('zIndex', '');
+    }
+
+    return false;
   },
 
   formatHcArticles: function(result){
