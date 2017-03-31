@@ -405,7 +405,7 @@ const App = {
   },
 
   subjectSearchQuery: function(ticketSubject){
-    if (this.ticketSubject) { return this.removeStopWords(this.ticketSubject, this.stop_words()); }
+    if (ticketSubject) { return this.removeStopWords(ticketSubject, this.stop_words()); }
 
     return null;
   },
