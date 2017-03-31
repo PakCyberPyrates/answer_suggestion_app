@@ -47,13 +47,3 @@
   {{/each}}
 </div>
 {{/if}}
-<script>
-$(document).ready(function() {
-  $(document).click(function() {
-    $('.c-menu').removeClass('is-open').each(function() {
-      this.offsetHeight; // trigger reflow
-    }).attr('aria-hidden', true);
-    $('.js-menu').removeClass('is-active');
-  });
-});
-</script>

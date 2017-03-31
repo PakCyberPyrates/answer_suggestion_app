@@ -18,11 +18,12 @@ const App = {
     'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
 
     // DOM EVENTS
+    'click body': 'closeMenus',
     'click a.preview_link': 'previewLink',
     'click a.copy_link': 'copyLink',
     'click .brand-filter .c-menu__item': 'processSearchFromInput',
     'click .locale-filter .c-menu__item': 'processSearchFromInput',
-    'click .js-menu': 'openMenu',
+    'click .js-menu': 'openActionMenu',
     'click .c-txt__input--select': 'toggleSelect',
     //rich text editor has built in drag and drop of links so we should only fire
     //the dragend event when users are using Markdown or text.
@@ -251,7 +252,7 @@ const App = {
   toggleSelect: function(event) {
     var $select = this.$(event.target).closest('.c-txt__input--select');
     var $menu = $select.parent().siblings('.c-menu');
-
+    this.closeActionMenus();
     $select.toggleClass('is-open');
     $menu.toggleClass('is-open', $select.hasClass('is-open'));
 
@@ -416,8 +417,10 @@ const App = {
     });
   },
 
-  openMenu: function(event) {
+  openActionMenu: function(event) {
     event.preventDefault();
+    this.closeInputSelects();
+
     var $this = this.$(event.target).closest('a'),
         elementBottom = $this.parent().position().top + $this.parent().outerHeight(true),
         distanceToDocumentBottom = $(document).height() - elementBottom;
@@ -426,7 +429,6 @@ const App = {
         $menu.css({ 'position':'absolute', 'visibility':'hidden', 'display':'block' });
     var menuHeight = $menu.height(),
         canFitBelow = distanceToDocumentBottom > (menuHeight + 20);
-        // console.log(distanceToDocumentBottom, menuHeight + 20, canFitBelow);
         $menu.removeAttr('style');
 
     if ($this.hasClass('is-active')) {
@@ -446,6 +448,27 @@ const App = {
     }
 
     return false;
+  },
+
+  closeMenus: function() {
+    this.closeInputSelects();
+    this.closeActionMenus();
+  },
+
+  closeInputSelects: function() {
+    var $menus = this.$('.c-txt__input--select'),
+        $dropdownOptions = $menus.parent().siblings('.c-menu');
+
+    $menus.removeClass('is-open');
+
+    $dropdownOptions.removeClass('is-open').hide().parent('.u-position-relative').css('zIndex', '');
+  },
+
+  closeActionMenus: function() {
+    this.$('.c-menu').removeClass('is-open').each(function() {
+      this.offsetHeight; // trigger reflow
+    }).attr('aria-hidden', true);
+    this.$('.js-menu').removeClass('is-active');
   }
 };
 
