@@ -26,7 +26,6 @@ const App = {
     //rich text editor has built in drag and drop of links so we should only fire
     //the dragend event when users are using Markdown or text.
     'dragend': function(event){ if (!this.useRichText) this.copyLink(event); },
-    'click .toggle-app': 'toggleAppContainer',
     'keyup .custom-search input': function(event){
       if (event.keyCode === 13) { return this.processSearchFromInput(); }
     },
@@ -390,19 +389,6 @@ const App = {
     if (this.ticketSubject) { return this.removeStopWords(this.ticketSubject, this.stop_words()); }
 
     return null;
-  },
-
-  toggleAppContainer: function(){
-    var $container = this.$('.app-container'),
-    $icon = this.$('.toggle-app i');
-
-    if ($container.is(':visible')){
-      $container.hide();
-      $icon.prop('class', 'icon-plus');
-    } else {
-      $container.show();
-      $icon.prop('class', 'icon-minus');
-    }
   },
 
   filterBrands: function(brands){
