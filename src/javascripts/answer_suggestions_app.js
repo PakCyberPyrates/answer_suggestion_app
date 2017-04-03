@@ -206,7 +206,7 @@ const App = {
       var options = _.map(data.locales, function(locale) {
         var data = {
           value: locale.locale,
-          label: locale.name
+          label: locale.presentation_name
         };
         if (user['currentUser.locale'] === locale.locale) { data.selected = 'is-selected'; }
         return data;
