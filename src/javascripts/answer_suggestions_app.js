@@ -290,10 +290,20 @@ const App = {
   },
 
   processSearchFromInput: function() {
-    var query = this.removePunctuation(this.$('.custom-search input').val()),
-        subjectSearchQuery = this.subjectSearchQuery();
-    if (! (query || subjectSearchQuery)) { return; }
-    query && query.length ? this.search(query) : this.search(subjectSearchQuery);
+    this.ticketSubjectPromise.then((ticketSubject) => {
+      if (_.isEmpty(ticketSubject)) {
+        return this.switchTo('no_subject');
+      }
+
+      var query = this.removePunctuation(this.$('.custom-search input').val()),
+          subjectSearchQuery = this.subjectSearchQuery(ticketSubject);
+
+      if (query && query.length) {
+        this.search(query);
+      } else if(subjectSearchQuery) {
+        this.search(subjectSearchQuery);
+      }
+    });
   },
 
   previewLink: function(event){
@@ -407,8 +417,6 @@ const App = {
 
   subjectSearchQuery: function(ticketSubject){
     if (ticketSubject) { return this.removeStopWords(ticketSubject, this.stop_words()); }
-
-    return null;
   },
 
   filterBrands: function(brands){
@@ -419,6 +427,7 @@ const App = {
 
   openActionMenu: function(event) {
     event.preventDefault();
+
     this.closeInputSelects();
 
     var $this = this.$(event.target).closest('a'),
@@ -426,16 +435,16 @@ const App = {
         distanceToDocumentBottom = $(document).height() - elementBottom;
 
     var $menu = $this.parent().find('.c-menu');
-        $menu.css({ 'position':'absolute', 'visibility':'hidden', 'display':'block' });
+    $menu.css({ 'visibility':'hidden' });
     var menuHeight = $menu.height(),
         canFitBelow = distanceToDocumentBottom > (menuHeight + 20);
-        $menu.removeAttr('style');
+
+    $menu.removeAttr('style');
 
     if ($this.hasClass('is-active')) {
-      $(document).trigger('click');
+      this.closeActionMenus();
     } else {
-      $(document).trigger('click');
-
+      this.closeActionMenus();
       $this.parent().find('.c-menu')
         .addClass('is-open')
         .attr('aria-hidden', false);
@@ -443,7 +452,7 @@ const App = {
       $this.addClass('is-active');
 
       if (canFitBelow) {
-        $this.parent().find('.c-menu').removeClass('c-arrow--b').addClass('c-arrow--t').removeClass('c-menu--up').addClass('c-menu--down');
+        $this.parent().find('.c-menu').removeClass('c-arrow--b c-menu--up').addClass('c-arrow--t c-menu--down');
       }
     }
 

@@ -33,6 +33,8 @@ $(document).ready(function() {
     $currentlySelected.removeClass('is-selected');
 
     $(this).addClass('is-selected');
+
+    if (! $dropdownButton.is(":focus")) { $dropdownButton.focus() };
   });
 
   $('.c-txt__label').click(function() {
