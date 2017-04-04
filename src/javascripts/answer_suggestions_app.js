@@ -21,8 +21,8 @@ const App = {
     'click body': 'closeMenus',
     'click a.preview_link': 'previewLink',
     'click a.copy_link': 'copyLink',
-    'click .brand-filter .c-menu__item': 'processSearchFromInput',
-    'click .locale-filter .c-menu__item': 'processSearchFromInput',
+    'click .brand-filter .c-menu__item': 'updateFilterList',
+    'click .locale-filter .c-menu__item': 'updateFilterList',
     'click .js-menu': 'openActionMenu',
     'click .c-txt__input--select': 'toggleSelect',
     //rich text editor has built in drag and drop of links so we should only fire
@@ -294,7 +294,7 @@ const App = {
     return { articles: articles };
   },
 
-  processSearchFromInput: function(event) {
+  processSearchFromInput: function() {
     this.ticketSubjectPromise.then((ticketSubject) => {
       if (_.isEmpty(ticketSubject)) {
         return this.switchTo('no_subject');
@@ -303,23 +303,27 @@ const App = {
       var query = this.removePunctuation(this.$('.custom-search input').val()),
           subjectSearchQuery = this.subjectSearchQuery(ticketSubject);
 
-      var $dropdownOptions = this.$(event.target).parent(),
-      $dropdownButton = $dropdownOptions.siblings('.c-txt').find('.c-txt__input--select'),
-      $currentlySelected = $dropdownOptions.find('.is-selected');
-
-      this.updateSelectedValue($dropdownButton, this.$(event.target));
-
-      $currentlySelected.removeClass('is-selected');
-      this.$(event.target).addClass('is-selected');
-
-      if (! $dropdownButton.is(":focus")) { $dropdownButton.focus() }
-
       if (query && query.length) {
         this.search(query);
       } else if(subjectSearchQuery) {
         this.search(subjectSearchQuery);
       }
     });
+  },
+
+  updateFilterList: function(event) {
+    var $dropdownOptions = this.$(event.target).parent(),
+    $dropdownButton = $dropdownOptions.siblings('.c-txt').find('.c-txt__input--select'),
+    $currentlySelected = $dropdownOptions.find('.is-selected');
+
+    this.updateSelectedValue($dropdownButton, this.$(event.target));
+
+    $currentlySelected.removeClass('is-selected');
+    this.$(event.target).addClass('is-selected');
+
+    if (! $dropdownButton.is(":focus")) { $dropdownButton.focus() }
+
+    this.processSearchFromInput();
   },
 
   updateSelectedValue: function(menu, selected) {
