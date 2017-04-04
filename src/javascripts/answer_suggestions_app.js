@@ -215,6 +215,12 @@ const App = {
       this.$('.custom-search').before(
         this.renderTemplate('locale_filter', { options: options })
       );
+
+      var $dropdownOptions = this.$('.locale-filter .c-menu'),
+          $dropdownButton = $dropdownOptions.siblings('.c-txt').find('.c-txt__input--select'),
+          $currentlySelected = $dropdownOptions.find('.is-selected');
+
+      this.updateSelectedValue($dropdownButton, $currentlySelected);
     });
   },
 
@@ -245,7 +251,6 @@ const App = {
       this.switchTo('no_articles');
     } else {
       this.switchTo('list', data);
-      this.$('.brand-logo').tooltip();
     }
   },
 
@@ -289,7 +294,7 @@ const App = {
     return { articles: articles };
   },
 
-  processSearchFromInput: function() {
+  processSearchFromInput: function(event) {
     this.ticketSubjectPromise.then((ticketSubject) => {
       if (_.isEmpty(ticketSubject)) {
         return this.switchTo('no_subject');
@@ -298,12 +303,27 @@ const App = {
       var query = this.removePunctuation(this.$('.custom-search input').val()),
           subjectSearchQuery = this.subjectSearchQuery(ticketSubject);
 
+      var $dropdownOptions = this.$(event.target).parent(),
+      $dropdownButton = $dropdownOptions.siblings('.c-txt').find('.c-txt__input--select'),
+      $currentlySelected = $dropdownOptions.find('.is-selected');
+
+      this.updateSelectedValue($dropdownButton, this.$(event.target));
+
+      $currentlySelected.removeClass('is-selected');
+      this.$(event.target).addClass('is-selected');
+
+      if (! $dropdownButton.is(":focus")) { $dropdownButton.focus() }
+
       if (query && query.length) {
         this.search(query);
       } else if(subjectSearchQuery) {
         this.search(subjectSearchQuery);
       }
     });
+  },
+
+  updateSelectedValue: function(menu, selected) {
+    menu.first('span').text(selected.text()).attr('data-val', selected.attr('data-val'));
   },
 
   previewLink: function(event){
