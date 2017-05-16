@@ -6,10 +6,10 @@
 </header>
 
 <div class="app-container">
-  <div class="input-append custom-search">
+  <form class="input-append custom-search">
     <input type="text" placeholder="{{t "layout.placeholder_text"}}">
-    <button class="search-btn btn" type="button">{{t "layout.search_button"}}</button>
-  </div>
+    <button class="search-btn btn" type="submit">{{t "layout.search_button"}}</button>
+  </form>
 
   <section data-main/>
 
