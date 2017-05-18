@@ -25,10 +25,7 @@
       //the dragend event when users are using Markdown or text.
       'dragend': function(event){ if (!this.useRichText) this.copyLink(event); },
       'click .toggle-app': 'toggleAppContainer',
-      'keyup .custom-search input': function(event){
-        if (event.keyCode === 13) { return this.processSearchFromInput(); }
-      },
-      'click .custom-search .search-btn': 'processSearchFromInput'
+      'submit .custom-search': 'processSearchFromInput'
     },
 
     requests: {
@@ -253,6 +250,7 @@
     processSearchFromInput: function() {
       var query = this.removePunctuation(this.$('.custom-search input').val());
       if (query && query.length) { this.search(query); }
+      return false;
     },
 
     baseUrl: function() {
