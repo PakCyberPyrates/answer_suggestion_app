@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Kopier artiklens titel?",
         "helpText": "Kopier artiklens titel samt linket til artiklen."
-      },
-      "search_hc": {
-        "label": "Bruger du Help Center?",
-        "helpText": "Vælg denne indstilling for at søge i artikler i Help Center."
-      },
-      "exclude_agent_only": {
-        "label": "Udeluk emnerne 'Kun agenter'. (Kun webportal)"
       }
     }
   },

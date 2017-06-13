@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Vil du kopiere artikkeltittelen?",
         "helpText": "Kopier artikkeltittelen samt artikkellenken."
-      },
-      "search_hc": {
-        "label": "Bruker du Kundesenteret?",
-        "helpText": "Velg dette alternativet for å søke i Kundesenter-artiklene."
-      },
-      "exclude_agent_only": {
-        "label": "Utelat emner av typen «Kun kundekonsulenter». (Bare i nettportalen)"
       }
     }
   },

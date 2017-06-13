@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Kopioidaanko artikkelin otsikko?",
         "helpText": "Kopioi artikkelin otsikko ja artikkelilinkki."
-      },
-      "search_hc": {
-        "label": "Käytätkö tukiportaalia?",
-        "helpText": "Valitse tämä asetus, jos haluat hakea tukiportaalin artikkeleista."
-      },
-      "exclude_agent_only": {
-        "label": "Jätä pois Vain tukihenkilöille -aiheet. (vain verkkoportaali)"
       }
     }
   },

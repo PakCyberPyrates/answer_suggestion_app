@@ -8,19 +8,12 @@
         "helpText": "Número de resultados para mostrar (opción predeterminada: 10, mín: 1, máx: 100)."
       },
       "custom_host": {
-        "label": "\r",
+        "label": "Dominio personalizado\n",
         "helpText": "por ej.: https://soporte.miempresa.com/"
       },
       "include_title": {
         "label": "¿Copiar título de artículo?",
         "helpText": "Copiar el título y el vínculo del artículo."
-      },
-      "search_hc": {
-        "label": "¿Está usando el Centro de ayuda?",
-        "helpText": "Seleccione esta opción para buscar artículos del Centro de ayuda."
-      },
-      "exclude_agent_only": {
-        "label": "Excluir los temas que solo los agentes pueden ver. (Solo portal web)"
       }
     }
   },

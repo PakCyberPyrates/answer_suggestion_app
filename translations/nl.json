@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Titel van artikel kopiëren?",
         "helpText": "Kopieer de artikeltitel en de koppeling naar het artikel."
-      },
-      "search_hc": {
-        "label": "Maakt u gebruik van Helpcenter?",
-        "helpText": "Selecteer deze optie als u naar Helpcenter-artikelen wilt zoeken."
-      },
-      "exclude_agent_only": {
-        "label": "Zonder onderwerpen die zijn aangeduid met 'Alleen agenten'. (alleen webportal)"
       }
     }
   },

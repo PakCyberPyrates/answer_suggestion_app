@@ -14,13 +14,6 @@
       "include_title": {
         "label": "複製文章標題？",
         "helpText": "複製文章標題及文章連結。"
-      },
-      "search_hc": {
-        "label": "您是否在使用客服中心？",
-        "helpText": "選取此選項搜尋客服中心文章。"
-      },
-      "exclude_agent_only": {
-        "label": "排除「僅限代理」主題。（僅限入口網站）"
       }
     }
   },

@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Makale başlığı kopyalansın mı?",
         "helpText": "Makale bağlantısının yanı sıra makale başlığını da kopyalayın."
-      },
-      "search_hc": {
-        "label": "Yardım Merkezini kullanıyor musunuz?",
-        "helpText": "Yardım Merkezi makalelerini aramak için bu seçeneği seçin."
-      },
-      "exclude_agent_only": {
-        "label": "\"Sadece temsilciler\" konu başlıklarını hariç tutun. (sadece Web Portalı)"
       }
     }
   },

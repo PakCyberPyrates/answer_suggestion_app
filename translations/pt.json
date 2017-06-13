@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Copiar o título do artigo?",
         "helpText": "Copia o título e o link do artigo."
-      },
-      "search_hc": {
-        "label": "Você está usando a Central de Ajuda?",
-        "helpText": "Marque essa opção para pesquisar os artigos da Central de Ajuda."
-      },
-      "exclude_agent_only": {
-        "label": "Apagar tópicos \"Apenas para agentes\". (apenas portal web)"
       }
     }
   },
