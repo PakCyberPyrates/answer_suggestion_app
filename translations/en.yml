@@ -6,13 +6,54 @@ packages:
 
 parts:
   - translation:
-      key: "txt.apps.answer_suggestion_app.app.description"
+      key: "txt.apps.answer_suggestion_app.app.short_description"
       title: "App description"
       value: "Answer Suggestions from your knowledge base."
   - translation:
       key: "txt.apps.answer_suggestion_app.app.name"
       title: "Name of the App"
       value: "Answer Suggestion"
+  - translation:
+      key: "txt.apps.answer_suggestion_app.app.long_description"
+      title: "Long Description for App: Answer Suggestion"
+      value: "The Zendesk Support Answer Suggestion app analyzes your ticket subject and looks through your Help Center content to suggest relevant articles and surface them right next to the ticket. Your agents won't get caught not knowing an answer to a customer's question if the answer is in your Help Center.
+
+
+Your agents can click any of the suggested articles to view them. A quick drag-and-drop enables them to add the article to their ticket response. With the Answer Suggestion app, your agents can answer customer questions faster and more accurately.
+
+
+For any questions, please email [support@zendesk.com](mailto:support@zendesk.com).
+
+
+By enabling this app, You agree to the [Built by Zendesk Terms of Use](https://www.zendesk.com/company/built-by-zendesk-agmt/)."
+  - translation:
+      key: "txt.apps.answer_suggestion_app.app.installation_instructions"
+      title: "Installation Instructions for App: Answer Suggestion"
+      value: "To use the Answer Suggestions app, you must:
+
+
+* Be using Zendesk Help Center or Web Portal
+
+
+To install the Answer Suggestions app:
+
+
+1. Sign in to your Zendesk Support account, then click the Admin icon in the sidebar.
+
+2. Select Apps > Marketplace,  then find the Answer Suggestions app and click the tile.
+
+3. On the Answer Suggestions app page, click Install app in the upper-right corner.
+
+4. Configure the app settings, then click Install:
+
+  * Number of results: Set the number of results you want the app to display in the ticket sidebar. By default, the app displays ten. The more results you display, the less relevant the ones at the bottom will be. We recommend a number between four and ten.
+
+  * Customer domain: Fill in the customer domain field only if you have a host mapped Help Center. For example, your URL is support.flylo.com instead of flylo.zendesk.com. Enter the complete URL (including http or https). For example, https://support.flylo.com/.
+
+
+    **NOTE: Make sure you enter the complete URL, including the / at the end, if you are using this customer domain setting. **
+
+  * Copy topic title: Check the copy topic title box if you want the app to copy both the link and title of the article."
   - translation:
       key: "txt.apps.answer_suggestion_app.app.parameters.nb_entries.label"
       title: "Number of results"
