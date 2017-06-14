@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Beitragstitel kopieren?",
         "helpText": "Titel und Link des Beitrags kopieren."
-      },
-      "search_hc": {
-        "label": "Verwenden Sie das Help Center?",
-        "helpText": "Wählen Sie diese Option aus, um Help-Center-Beiträge zu durchsuchen."
-      },
-      "exclude_agent_only": {
-        "label": "Themen ausschließen, die nur für Agenten bestimmt sind (nur Web-Portal)."
       }
     }
   },

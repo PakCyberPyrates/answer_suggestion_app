@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Copy article title?",
         "helpText": "Copy the article title as well as the article link."
-      },
-      "search_hc": {
-        "label": "Are you using Help Center?",
-        "helpText": "Select this option to search Help Center articles."
-      },
-      "exclude_agent_only": {
-        "label": "Exclude 'Agents only' topics. (Web Portal only)"
       }
     }
   },

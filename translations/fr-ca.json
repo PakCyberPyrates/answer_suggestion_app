@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Copier le titre de l’article ?",
         "helpText": "Copiez le titre de l’article en plus du lien de l’article."
-      },
-      "search_hc": {
-        "label": "Utiliser le centre d’aide ?",
-        "helpText": "Sélectionnez cette option pour effectuer des recherches dans les articles du centre d’aide."
-      },
-      "exclude_agent_only": {
-        "label": "Exclure les sujets réservés aux agents (portail uniquement)"
       }
     }
   },

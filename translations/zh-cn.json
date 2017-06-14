@@ -14,13 +14,6 @@
       "include_title": {
         "label": "复制文章标题？",
         "helpText": "复制文章标题以及文章链接。"
-      },
-      "search_hc": {
-        "label": "您在使用帮助中心吗？",
-        "helpText": "选择此选项搜索帮助中心文章。"
-      },
-      "exclude_agent_only": {
-        "label": "“仅限专员”主题除外。（仅限网络门户）"
       }
     }
   },

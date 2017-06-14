@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Vill du kopiera artikelns titel?",
         "helpText": "Kopiera artikelns titel såväl som artikellänken."
-      },
-      "search_hc": {
-        "label": "Använder du Helpcenter?",
-        "helpText": "Välj detta alternativ för att söka efter Helpcenter-artiklar."
-      },
-      "exclude_agent_only": {
-        "label": "Uteslut Endast agenter-ämnen. (endast webbportalen)"
       }
     }
   },

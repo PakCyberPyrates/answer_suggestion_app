@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Copiare il titolo dell’articolo?",
         "helpText": "Copia il titolo dell’articolo oltre al link."
-      },
-      "search_hc": {
-        "label": "Utilizzate il Centro assistenza?",
-        "helpText": "Selezionare questa opzione per cercare negli articoli del Centro assistenza."
-      },
-      "exclude_agent_only": {
-        "label": "Escludi argomenti “Solo agenti” (solo portale web)."
       }
     }
   },

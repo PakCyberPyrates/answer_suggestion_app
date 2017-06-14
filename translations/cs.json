@@ -14,13 +14,6 @@
       "include_title": {
         "label": "Zkopírovat titul článku?",
         "helpText": "Zkopírujte titul článku i odkaz na článek."
-      },
-      "search_hc": {
-        "label": "Používáte Centrum nápovědy?",
-        "helpText": "Vyberte tuto volbu pro hledání článků Centra nápovědy."
-      },
-      "exclude_agent_only": {
-        "label": "Vyřadit témata „Pouze pro agenty“. (pouze u webového portálu)"
       }
     }
   },
