@@ -1,12 +1,12 @@
 {
   "app": {
-    "short_description": {
-      "title": "App description",
-      "value": "Answer Suggestions from your knowledge base."
-    },
     "name": {
       "title": "Name of the App",
       "value": "Answer Suggestion"
+    },
+    "short_description": {
+      "title": "App description",
+      "value": "Answer Suggestions from your knowledge base."
     },
     "long_description": {
       "title": "Long Description for App: Answer Suggestion",
