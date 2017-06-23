@@ -31,12 +31,9 @@ By enabling this app, You agree to the [Built by Zendesk Terms of Use](https://w
       title: "Installation Instructions for App: Answer Suggestion"
       value: "To use the Answer Suggestions app, you must:
 
-
 * Be using Zendesk Guide
 
-
 To install the Answer Suggestions app:
-
 
 1. Sign in to your Zendesk Support account, then click the Admin icon in the sidebar.
 
@@ -46,14 +43,12 @@ To install the Answer Suggestions app:
 
 4. Configure the app settings, then click Install:
 
-  * Number of results: Set the number of results you want the app to display in the ticket sidebar. By default, the app displays ten. The more results you display, the less relevant the ones at the bottom will be. We recommend a number between four and ten.
+   * Number of results: Set the number of results you want the app to display in the ticket sidebar. By default, the app displays ten. The more results you display, the less relevant the ones at the bottom will be. We recommend a number between four and ten.
 
-  * Customer domain: Fill in the customer domain field only if you have a host mapped Help Center. For example, your URL is support.flylo.com instead of flylo.zendesk.com. Enter the complete URL (including http or https). For example, https://support.flylo.com/.
+   * Customer domain: Fill in the customer domain field only if you have a host mapped Help Center. For example, your URL is support.flylo.com instead of flylo.zendesk.com. Enter the complete URL (including http or https). For example, https://support.flylo.com/.
+  **NOTE: Make sure you enter the complete URL, including the / at the end, if you are using this customer domain setting.**
 
-
-    **NOTE: Make sure you enter the complete URL, including the / at the end, if you are using this customer domain setting. **
-
-  * Copy topic title: Check the copy topic title box if you want the app to copy both the link and title of the article."
+   * Copy topic title: Check the copy topic title box if you want the app to copy both the link and title of the article."
   - translation:
       key: "txt.apps.answer_suggestion_app.app.parameters.nb_entries.label"
       title: "Number of results"
