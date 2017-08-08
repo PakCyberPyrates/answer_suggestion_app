@@ -14,7 +14,7 @@
     },
     "installation_instructions": {
       "title": "Installation Instructions for App: Answer Suggestion",
-      "value": "To use the Answer Suggestions app, you must:\n* Be using Zendesk Guide\nTo install the Answer Suggestions app:\n1. Sign in to your Zendesk Support account, then click the Admin icon in the sidebar.\n2. Select Apps > Marketplace,  then find the Answer Suggestions app and click the tile.\n3. On the Answer Suggestions app page, click Install app in the upper-right corner.\n4. Configure the app settings, then click Install:\n* Number of results: Set the number of results you want the app to display in the ticket sidebar. By default, the app displays ten. The more results you display, the less relevant the ones at the bottom will be. We recommend a number between four and ten.\n* Customer domain: Fill in the customer domain field only if you have a host mapped Help Center. For example, your URL is support.flylo.com instead of flylo.zendesk.com. Enter the complete URL (including http or https). For example, https://support.flylo.com/. **NOTE: Make sure you enter the complete URL, including the / at the end, if you are using this customer domain setting.**\n* Copy topic title: Check the copy topic title box if you want the app to copy both the link and title of the article."
+      "value": "To use the Answer Suggestions app, you must:\n\n* Be using Zendesk Guide\n\nTo install the Answer Suggestions app:\n\n1. Sign in to your Zendesk Support account, then click the Admin icon in the sidebar.\n\n2. Select Apps > Marketplace,  then find the Answer Suggestions app and click the tile.\n\n3. On the Answer Suggestions app page, click Install app in the upper-right corner.\n\n4. Configure the app settings, then click Install:\n\n* Number of results: Set the number of results you want the app to display in the ticket sidebar. By default, the app displays ten. The more results you display, the less relevant the ones at the bottom will be. We recommend a number between four and ten.\n\n* Customer domain: Fill in the customer domain field only if you have a host-mapped Help Center. You will need to enter the complete URL of your host-mapped address (including http or https). For example, if your host-mapped Help Center address is support.flylo.com instead of flylo.zendesk.com, you would enter https://support.flylo.com/. **NOTE: Make sure you enter the complete URL, including the / at the end, if you are using this customer domain setting.**\n\n* Copy topic title: Check the copy topic title box, if you want the app to copy both the link and title of the article."
     },
     "parameters": {
       "nb_entries": {
@@ -45,22 +45,6 @@
         "helpText": {
           "title": "Help text for the article title copy feature",
           "value": "Copy the article title as well as the article link."
-        }
-      },
-      "search_hc": {
-        "label": {
-          "title": "Check box for customers who are using help center as opposed to web portal",
-          "value": "Are you using Help Center?"
-        },
-        "helpText": {
-          "title": "Help text for the check box for help center usage",
-          "value": "Select this option to search Help Center articles."
-        }
-      },
-      "exclude_agent_only": {
-        "label": {
-          "title": "Check box to exclude topics only visible to agents",
-          "value": "Exclude 'Agents only' topics. (Web Portal only)"
         }
       }
     },
