@@ -12,7 +12,7 @@ parts:
   - translation:
       key: "txt.apps.answer_suggestion_app.app.short_description"
       title: "App description"
-      value: "Answer Suggestions from your knowledge base"
+      value: "Answer suggestions from your knowledge base"
   - translation:
       key: "txt.apps.answer_suggestion_app.app.long_description"
       title: "Long Description for App: Answer Suggestion"
