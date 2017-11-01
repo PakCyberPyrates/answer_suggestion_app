@@ -13,7 +13,7 @@
       // AJAX EVENTS
       'searchHelpCenter.done': 'searchHelpCenterDone',
       'getHcArticle.done': 'getHcArticleDone',
-      'getSectionAccessPolicy.done': 'getSectionAccessPolicyDone',
+      'getSection.done': 'getSectionDone',
       'settings.done': 'settingsDone',
 
       // DOM EVENTS
@@ -51,9 +51,9 @@
         };
       },
 
-      getSectionAccessPolicy: function(sectionId) {
+      getSection: function(sectionId) {
         return {
-          url: helpers.fmt('/api/v2/help_center/sections/%@/access_policy.json', sectionId),
+          url: helpers.fmt('/api/v2/help_center/sections/%@.json', sectionId),
           type: 'GET'
         };
       },
@@ -149,13 +149,9 @@
       return localizedTranslation && localizedTranslation.body || translations[0].body;
     },
 
-    renderAgentOnlyAlert: function() {
+    renderPrivateAlert: function() {
       var alert = this.renderTemplate('alert');
       this.$('#detailsModal .modal-body').prepend(alert);
-    },
-
-    isAgentOnlyContent: function(data) {
-      return data.agent_only || data.access_policy && data.access_policy.viewable_by !== 'everybody';
     },
 
     getBrandsDone: function(data) {
@@ -196,7 +192,7 @@
 
     getHcArticleDone: function(data) {
       if (data.article && data.article.section_id) {
-        this.ajax('getSectionAccessPolicy', data.article.section_id);
+        this.ajax('getSection', data.article.section_id);
       }
 
       var modalContent = this.hcArticleLocaleContent(data);
@@ -207,8 +203,9 @@
       this.$('#detailsModal .modal-body .content-body').html(modalContent);
     },
 
-    getSectionAccessPolicyDone: function(data) {
-      if (this.isAgentOnlyContent(data)) { this.renderAgentOnlyAlert(); }
+    getSectionDone: function(data) {
+      var publicSection = data.section && !data.section.user_segment_id;
+      if (!publicSection) { this.renderPrivateAlert(); }
     },
 
     searchHelpCenterDone: function(data) {
