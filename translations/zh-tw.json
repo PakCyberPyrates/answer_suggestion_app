@@ -1,7 +1,9 @@
 {
   "app": {
-    "description": "您知識庫中的答案建議。",
     "name": "答案建議",
+    "short_description": "您知識庫中的答案建議",
+    "long_description": "Zendesk Support「答案建議」app 可分析工單標題，搜尋您的客服中心內容，建議相關文章並顯示在工單旁。若客戶問題的答案已存在於您的客服中心，您的代理就可從容不迫地提供答案。\n\n您的代理可按一下任一篇建議的文章來檢視。可迅速拖曳文章將其新增至工單回覆。「答案建議」app 可使您的代理更迅速、更準確地回答客戶問題。\n\n若有任何疑問，請電郵 [support@zendesk.com](mailto:support@zendesk.com)。\n\n啟用此 app 即表示您同意 [Zendesk 自建使用條款](https://www.zendesk.com/company/built-by-zendesk-agmt/)。",
+    "installation_instructions": "若要使用「答案建議」app，您需：\n* 使用 Zendesk Guide\n若要安裝「答案建議」app：\n1. 登入 Zendesk Support 帳戶，再按一下側欄中的「管理員」圖示。\n2. 選取 App > Marketplace，再尋找「答案建議」app 並按一下該圖磚。\n3. 在「答案建議」app 頁面上，按一下右上角的「安裝 App」。\n4. 設定 app 設定值，再按一下「安裝」：\n* 結果數目：設定您要 app 在工單側欄中顯示的結果數目。預設此 app 顯示十條結果。顯示結果越多，底部相關性越差。我們建議顯示四至十條結果。\n* 客戶網域：僅在您有主機對應的客服中心時填寫客戶網域欄位。您需輸入主機對應地址的完整 URL（包括 http 或 https）。例如，若您的主機對應的客服中心地址為 support.flylo.com 而不是 flylo.zendesk.com，則應輸入 https://support.flylo.com/。**備註：若您用此客戶網域設定值，請確保您輸入完整的 URL，包括結尾的 /。**\n* 複製主題標題：若您要 app 複製文章連結和標題，請核取「複製主題標題」方塊。",
     "parameters": {
       "nb_entries": {
         "label": "結果數目",
