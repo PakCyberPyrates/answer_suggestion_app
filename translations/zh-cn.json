@@ -1,7 +1,9 @@
 {
   "app": {
-    "description": "您知识库中的答案推荐。",
     "name": "答案推荐",
+    "short_description": "您知识库中的答案推荐",
+    "long_description": "Zendesk Support 的“答案推荐”应用会分析您的工单标题，搜索您的帮助中心内容，并推荐相关文章显示在工单旁边。如果客户提的问题答案在您的帮助中心里，您的专员就不会不知所措了。\n\n您的专员可单击任意推荐文章来查看。快速拖放即可将文章添加到工单回复中。有了“答案推荐”应用，您的专员就能更快、更准确地回答客户的问题了。\n\n如有任何疑问，请电邮 [support@zendesk.com](mailto:support@zendesk.com)。\n\n启用此应用即表示您同意 [Zendesk 自建使用条款](https://www.zendesk.com/company/built-by-zendesk-agmt/)。",
+    "installation_instructions": "要使用“答案推荐”应用，您必须：\n* 使用 Zendesk Guide\n要安装“答案推荐”应用：\n1. 登录您的 Zendesk Support 帐户，然后单击侧栏中的管理员图标。\n2. 选择应用 > 市场，然后查找“答案推荐”应用并单击该磁贴。\n3. 在“答案推荐”应用页面上，单击右上角的“安装应用”。\n4. 配置应用设置，然后单击“安装”：\n* 结果数：设置您要应用在工单侧栏中显示的结果数量。此应用默认显示十条结果。显示的结果越多，往下的相关性就越低。我们建议显示四到十条。\n* 客户域名：仅当您有主机映射的帮助中心时才填写客户域名字段。您将需要输入主机映射地址的完整 URL（包括 http 或 https）。例如，如果您的主机映射帮助中心地址为 support.flylo.com 而不是 flylo.zendesk.com，您应输入 https://support.flylo.com/。**注释：如果您使用这种客户域名设置，请确保您输入的是完整的 URL，包括结尾的 / 符号。**\n* 复制主题标题：如果您要应用复制文章的链接和标题，请勾选“复制主题标题”复选框。",
     "parameters": {
       "nb_entries": {
         "label": "结果数",

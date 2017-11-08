@@ -1,7 +1,9 @@
 {
   "app": {
-    "description": "Antwoordsuggesties uit onze kennisbank.",
-    "name": "Antwoordsuggesties",
+    "name": "Antwoordsuggestie",
+    "short_description": "Antwoordsuggesties uit uw kennisbank",
+    "long_description": "De Zendesk Support-app Antwoordsuggesties analyseert uw ticketonderwerp en kijkt in de inhoud van uw Helpcenter om relevante artikelen voor te stellen en deze naast het ticket weer te geven. Uw agenten weten altijd antwoord te geven op een door de klant gestelde vraag als het antwoord in uw Helpcenter staat.\n\nUw agenten hoeven alleen maar te klikken op een voorgesteld artikel om de inhoud ervan te bekijken. En met slepen-en-neerzetten kunnen ze het artikel aan hun ticketantwoord toevoegen. Met de app Antwoordsuggesties kunnen uw agenten vragen van klanten sneller en doelgerichter beantwoorden.\n\nStuur bij vragen een e-mail naar [support@zendesk.com](mailto:support@zendesk.com).\n\nDoor deze app in te schakelen, gaat u akkoord met de [Gebruiksvoorwaarden van Gemaakt door Zendesk](https://www.zendesk.com/company/built-by-zendesk-agmt/).",
+    "installation_instructions": "Als u de app Antwoordsuggesties wilt gebruiken, dient u het volgende te doen:\n* U moet Zendesk Guide gebruiken\nZo installeert u de app Antwoordsuggesties:\n1. Meld u aan bij uw Zendesk Support-account en klik op het pictogram Admin op de zijbalk.\n2. Selecteer Apps > Marketplace, zoek de app Antwoordsuggestie en klik op de tegel.\n3. Klik op de pagina met de app Antwoordsuggestie rechtsboven op App installeren.\n4. Configureer de app-instellingen en klik op Installeren:\n* Aantal resultaten: stel het aantal resultaten in dat u wilt dat de app in de ticketzijbalk weergeeft. Standaard geeft de app er tien weer. Hoe meer resultaten u weergeeft, hoe minder relevant ze onder in de lijst zijn. Wij raden een aantal tussen vier en tien aan.\n* Domein van de klant: vul het veld voor het domein van de klant alleen in als u een Helpcenter met hostmapping hebt. U dient het volledige webadres in te voeren van uw gehostmapte adres (inclusief http of https). Een voorbeeld: als het gehostmapte adres van uw Helpcenter support.flylo.com is in plaats van flylo.zendesk.com, geeft u https://support.flylo.com/ op. **OPMERKING: zorg dat u het gehele webadres opgeeft, inclusief de / aan het einde, als u deze klantdomeininstelling gebruikt.**\n* Vermelde titel kopiëren: schakel het selectievakje voor het kopiëren van de vermelde titel in als u wilt dat de app zowel de koppeling als de titel van het artikel kopieert.",
     "parameters": {
       "nb_entries": {
         "label": "Aantal resultaten.",
@@ -13,7 +15,7 @@
       },
       "include_title": {
         "label": "Titel van artikel kopiëren?",
-        "helpText": "Kopieer de artikeltitel en de koppeling naar het artikel."
+        "helpText": "Kopieer de artikeltitel en de link naar het artikel."
       }
     }
   },
@@ -23,13 +25,13 @@
   },
   "list": {
     "newtab_link": "Openen in een nieuw tabblad",
-    "copylink_link": "Koppeling naar opmerking kopiëren",
+    "copylink_link": "Link naar opmerking kopiëren",
     "preview_link": "Voorbeeldweergave van artikel"
   },
   "stop_words": "a, about, above, across, after, again, against, all, almost, alone, along, already, also, although, always, am, among, an, and, another, any, anybody, anyone, anything, anywhere, are, area, areas, aren't, around, as, ask, asked, asking, asks, at, away, b, back, backed, backing, backs, be, became, because, become, becomes, been, before, began, behind, being, beings, below, best, better, between, big, both, but, by, c, came, can, cannot, can't, case, cases, certain, certainly, clear, clearly, come, could, couldn't, d, did, didn't, differ, different, differently, do, does, doesn't, doing, done, don't, down, downed, downing, downs, during, e, each, early, either, end, ended, ending, ends, enough, even, evenly, ever, every, everybody, everyone, everything, everywhere, f, face, faces, fact, facts, far, felt, few, find, finds, first, for, four, from, full, fully, further, furthered, furthering, furthers, g, gave, general, generally, get, gets, give, given, gives, go, going, good, goods, got, great, greater, greatest, group, grouped, grouping, groups, h, had, hadn't, has, hasn't, have, haven't, having, he, he'd, he'll, her, here, here's, hers, herself, he's, high, higher, highest, him, himself, his, how, however, how's, i, i'd, if, i'll, i'm, important, in, interest, interested, interesting, interests, into, is, isn't, it, its, it's, itself, i've, j, just, k, keep, keeps, kind, knew, know, known, knows, l, large, largely, last, later, latest, least, less, let, lets, let's, like, likely, long, longer, longest, m, made, make, making, man, many, may, me, member, members, men, might, more, most, mostly, mr, mrs, much, must, mustn't, my, myself, n, necessary, need, needed, needing, needs, never, new, newer, newest, next, no, nobody, non, noone, nor, not, nothing, now, nowhere, number, numbers, o, of, off, often, old, older, oldest, on, once, one, only, open, opened, opening, opens, or, order, ordered, ordering, orders, other, others, ought, our, ours, ourselves, out, over, own, p, part, parted, parting, parts, per, perhaps, place, places, point, pointed, pointing, points, possible, present, presented, presenting, presents, problem, problems, put, puts, q, quite, r, rather, really, right, room, rooms, s, said, same, saw, say, says, second, seconds, see, seem, seemed, seeming, seems, sees, several, shall, shan't, she, she'd, she'll, she's, should, shouldn't, show, showed, showing, shows, side, sides, since, small, smaller, smallest, so, some, somebody, someone, something, somewhere, state, states, still, such, sure, t, take, taken, than, that, that's, the, their, theirs, them, themselves, then, there, therefore, there's, these, they, they'd, they'll, they're, they've, thing, things, think, thinks, this, those, though, thought, thoughts, three, through, thus, to, today, together, too, took, toward, turn, turned, turning, turns, two, u, under, until, up, upon, us, use, used, uses, v, very, w, want, wanted, wanting, wants, was, wasn't, way, ways, we, we'd, well, we'll, wells, went, were, we're, weren't, we've, what, what's, when, when's, where, where's, whether, which, while, who, whole, whom, who's, whose, why, why's, will, with, within, without, won't, work, worked, working, works, would, wouldn't, x, y, year, years, yes, yet, you, you'd, you'll, young, younger, youngest, your, you're, yours, yourself, yourselves, you've, z",
   "no_entries": "Geen suggesties voor dit ticket.",
   "no_subject": "Er moet nog een onderwerp worden opgegeven...",
-  "help_text": "Klik op de koppeling om deze aan de opmerking toe te voegen:",
+  "help_text": "Klik op de link om deze aan de opmerking toe te voegen:",
   "spinner": "laden",
   "agents_only": "Privé",
   "private_content_notice": "Eindgebruikers hebben geen toegang tot deze inhoud.",
