@@ -250,15 +250,6 @@
       return false;
     },
 
-    baseUrl: function() {
-      if (this.setting('custom_host')) {
-        var host = this.setting('custom_host');
-        if (host[host.length - 1] !== '/') { host += '/'; }
-        return host;
-      }
-      return helpers.fmt("https://%@.zendesk.com/", this.currentAccount().subdomain());
-    },
-
     previewLink: function(event){
       event.preventDefault();
       var $link = this.$(event.target).closest('a');
