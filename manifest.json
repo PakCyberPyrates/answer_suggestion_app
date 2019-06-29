@@ -9,13 +9,13 @@
   "private": false,
   "location": {
     "support": {
-      "background": "assets/iframe.html",
+      "background": "images/iframe.html",
       "ticket_sidebar": {
         "autoLoad": false
       },
       "top_bar": {
         "autoHide": true,
-        "url": "assets/top_bar.html",
+        "url": "images/top_bar.html",
         "size": {
           "width": "450px",
           "height": "500px"
