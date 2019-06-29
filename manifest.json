@@ -1,32 +1,36 @@
 {
-  "name": "Answer Suggestion",
+  "name": "My App",
   "author": {
-    "name": "Zendesk",
-    "email": "support@zendesk.com",
-     "url": "https://frmonabil.zendesk.com"
+    "name": "Jean Thompson",
+    "email": "support@omniwear.com",
+    "url": "https://www.omniwear.com/profiles/jthompson"
   },
-  "parameters": [
-    {
-      "name": "nb_entries",
-      "type": "number",
-      "default": 10,
-      "required": true
-    },
-    {
-      "name": "custom_host",
-      "type": "url"
-    },
-    {
-      "name": "include_title",
-      "type": "checkbox",
-      "default": "1"
-    }
-  ],
   "defaultLocale": "en",
   "private": false,
-  "location": [
-    "ticket_sidebar",
-    "new_ticket_sidebar"
+  "location": {
+    "support": {
+      "background": "assets/iframe.html",
+      "ticket_sidebar": {
+        "autoLoad": false
+      },
+      "top_bar": {
+        "autoHide": true,
+        "url": "assets/top_bar.html",
+        "size": {
+          "width": "450px",
+          "height": "500px"
+        }
+      }
+    }
+  },
+  "domainWhitelist": ["omniwear.com"],
+  "parameters": [
+    {
+      "name": "token",
+      "type": "text",
+      "secure": true,
+      "required": true
+    }
   ],
   "version": "1.0",
   "frameworkVersion": "2.0"
